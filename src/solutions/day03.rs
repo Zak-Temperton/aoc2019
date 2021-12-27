@@ -111,16 +111,14 @@ impl Wire {
     }
 
     pub fn intersection(&self, other: &Wire) -> Option<Point> {
-        if self.start.x == 0 && other.start.x == 0 && self.start.y == 0 && other.start.y == 0 {
-            None
-        } else if self.start.y == self.end.y && other.start.x == other.end.x {
+        if self.start.y == self.end.y && other.start.x == other.end.x {
             let y = self.start.y;
             let x = other.start.x;
             let x_upper = self.start.x.max(self.end.x);
             let x_lower = self.start.x.min(self.end.x);
             let y_upper = other.start.y.max(other.end.y);
             let y_lower = other.start.y.min(other.end.y);
-            if x >= x_lower && x <= x_upper && y >= y_lower && y <= y_upper {
+            if x > x_lower && x < x_upper && y > y_lower && y < y_upper {
                 Some(Point::new(x, y))
             } else {
                 None
@@ -132,7 +130,7 @@ impl Wire {
             let x_lower = other.start.x.min(other.end.x);
             let y_upper = self.start.y.max(self.end.y);
             let y_lower = self.start.y.min(self.end.y);
-            if x >= x_lower && x <= x_upper && y >= y_lower && y <= y_upper {
+            if x > x_lower && x < x_upper && y > y_lower && y < y_upper {
                 Some(Point::new(x, y))
             } else {
                 None
