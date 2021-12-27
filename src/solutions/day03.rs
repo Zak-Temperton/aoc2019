@@ -1,13 +1,11 @@
-use std::collections::HashMap;
-
 pub fn part1(text: &str) -> String {
     let mut lines = text.lines();
     let wires1 = parse_wires(&mut lines);
     let wires2 = parse_wires(&mut lines);
     let mut min = isize::MAX;
-    for i in 0..wires1.len() {
-        for j in 0..wires2.len() {
-            if let Some(intersection) = wires1[i].intersection(&wires2[j]) {
+    for wire1 in &wires1 {
+        for wire2 in &wires2 {
+            if let Some(intersection) = wire1.intersection(wire2) {
                 let manhattan = intersection.manhattan();
                 if manhattan < min {
                     min = manhattan;
@@ -64,14 +62,14 @@ pub fn part2(text: &str) -> String {
         for j in 0..wires2.len() {
             if let Some(intersection) = wires1[i].intersection(&wires2[j]) {
                 let mut steps = 0;
-                for i in 0..i {
-                    steps += wires1[i].manhattan_length();
+                for wire in wires1.iter().take(i) {
+                    steps += wire.manhattan_length();
                 }
                 steps += (wires1[i].start.x - intersection.x).abs()
                     + (wires1[i].start.y - intersection.y).abs();
 
-                for j in 0..j {
-                    steps += wires2[j].manhattan_length();
+                for wire in wires2.iter().take(j) {
+                    steps += wire.manhattan_length();
                 }
                 steps += (wires2[j].start.x - intersection.x).abs()
                     + (wires2[j].start.y - intersection.y).abs();
@@ -142,9 +140,5 @@ impl Wire {
 
     pub fn manhattan_length(&self) -> isize {
         (self.start.x - self.end.x).abs() + (self.start.y - self.end.y).abs()
-    }
-
-    pub fn point_on_wire(&self, point: &Point) -> bool {
-        true
     }
 }
