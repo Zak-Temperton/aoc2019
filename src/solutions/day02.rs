@@ -25,7 +25,7 @@ fn mul(op_codes: &mut [usize], i: usize) {
 pub fn part2(text: &str) -> String {
     let op_codes: Vec<usize> = text.split(',').flat_map(|num| num.parse()).collect();
     for a in 0..op_codes.len() {
-        for b in a..op_codes.len() {
+        for b in 0..op_codes.len() {
             let mut op_codes = op_codes.clone();
             op_codes[1] = a;
             op_codes[2] = b;
