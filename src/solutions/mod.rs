@@ -32,3 +32,11 @@ pub(crate) fn day04() {
     println!("part1: {}", part1(&text));
     println!("part2: {}", part2(&text));
 }
+mod day05;
+pub(crate) fn day05() {
+    use day05::*;
+    println!("day05:");
+    let text = read_to_string("res/day05.txt").unwrap();
+    println!("part1: {}", part1(&text));
+    println!("part2: {}", part2(&text));
+}
