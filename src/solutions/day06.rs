@@ -9,18 +9,17 @@ pub fn part1(text: &str) -> String {
             .or_insert_with(Vec::new)
             .push(split.next().unwrap());
     }
-    let mut paths = 0;
-    sum_orbits(&orbits, "COM", 0, &mut paths);
-    paths.to_string()
+    sum_orbits(&orbits, "COM", 0).to_string()
 }
 
-fn sum_orbits(orbits: &HashMap<&str, Vec<&str>>, node: &str, sum: usize, paths: &mut usize) {
-    *paths += sum;
+fn sum_orbits(orbits: &HashMap<&str, Vec<&str>>, node: &str, depth: usize) -> usize {
+    let mut total = depth;
     if let Some(orbit) = orbits.get(node) {
         orbit.iter().for_each(|&o| {
-            sum_orbits(orbits, o, sum + 1, paths);
+            total += sum_orbits(orbits, o, depth + 1);
         });
     }
+    total
 }
 pub fn part2(_: &str) -> String {
     "".to_string()
